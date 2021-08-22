@@ -1,5 +1,6 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import App from "./App";
+import { replaceNameWithSpaces } from "./App";
 
 test("button has correct initial color", () => {
   render(<App />);
@@ -46,4 +47,18 @@ test("button is enabled or not", () => {
   // test second event that changes button back to enabled
   fireEvent.click(checkbox);
   expect(colorButton).toBeEnabled();
+});
+
+describe("spaces before camel-case capital letters", () => {
+  test("works for no inner capital letters", () => {
+    expect(replaceNameWithSpaces("Red")).toBe("Red");
+  });
+
+  test("works for one inner capital letter", () => {
+    expect(replaceNameWithSpaces("MidnightBlue")).toBe("Midnight Blue");
+  });
+
+  test("works for multiple inner capital letters", () => {
+    expect(replaceNameWithSpaces("MediumVioletRed")).toBe("Medium Violet Red");
+  });
 });
